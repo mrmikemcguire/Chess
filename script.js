@@ -1,3 +1,10 @@
+/* @license
+ * This code is lightly modified from the following source:
+ * Copyright (c) 2018, Jeff Hlywa (jhlywa@gmail.com)
+ * Released under the BSD license
+ * https://github.com/jhlywa/chess.js/blob/master/LICENSE
+ */
+
 var board,
     game = new Chess();
 
@@ -5,8 +12,7 @@ var board,
 
 var minimaxRoot =function(depth, game, isMaximisingPlayer) 
     {
-
-    var newGameMoves = game.ugly_moves();
+    var newGameMoves = game.ugly_moves();  // this calls generate_moves() in chess.js
     var bestMove = -9999;
     var bestMoveFound;
 
@@ -69,20 +75,20 @@ var minimax = function (depth, game, alpha, beta, isMaximisingPlayer)
         }
     };
 
-var evaluateBoard = function (board) 
+var evaluateBoard = function (board)  //totals the evaluation of every square on the board
     {
     var totalEvaluation = 0;
     for (var i = 0; i < 8; i++) 
         {
         for (var j = 0; j < 8; j++) 
             {
-            totalEvaluation = totalEvaluation + getPieceValue(board[i][j], i ,j);
+            totalEvaluation += getPieceValue(board[i][j], i ,j);
             }
         }
     return totalEvaluation;
     };
 
-var reverseArray = function(array) 
+var reverseArray = function(array) //switches the piece-square values for Black
     {
     return array.slice().reverse();
     };
@@ -167,13 +173,13 @@ var kingEvalWhite =
 
 var kingEvalBlack = reverseArray(kingEvalWhite);
 
-var getPieceValue = function (piece, x, y) 
+var getPieceValue = function (piece, x, y) //combines basic piece value with piece-square value
     {
     if (piece === null) 
         {
         return 0;
         }
-    var getAbsoluteValue = function (piece, isWhite, x ,y) 
+    var getAbsoluteValue = function (piece, isWhite, x ,y)  
         {
         if (piece.type === 'p') 
             {
@@ -269,7 +275,7 @@ var onDrop = function (source, target)
     var move = game.move({
         from: source,
         to: target,
-        promotion: 'q'
+        promotion: 'q' //automatically promotes to a queen
         });
 
     removeGreySquares();
@@ -332,12 +338,12 @@ var greySquare = function(square)
 var cfg = 
     {
     draggable: true,
-    position: 'start',
+    position: 'start',      //This also accepts FEN
     onDragStart: onDragStart,
     onDrop: onDrop,
     onMouseoutSquare: onMouseoutSquare,
     onMouseoverSquare: onMouseoverSquare,
     onSnapEnd: onSnapEnd
     };
-    
+
 board = ChessBoard('board', cfg);
