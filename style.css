@@ -1,14 +1,17 @@
-.board {
+.board 
+    {
     width: 400px;
     margin: auto
-}
+    }
 
-.info {
+.info 
+    {
     width: 400px;
     margin: auto;
-}
+    }
 
-.move-history {
+.move-history 
+    {
     max-height: 100px;
     overflow-y: scroll;
-}
+    }
